@@ -1,0 +1,480 @@
+syntax = "proto3";
+
+option go_package = "proto/user";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service User {
+  rpc Register (RegisterRequest) returns (SuccessResponse) {}
+  rpc RegisterWithMobileNumber (RegisterWithMobileNumberRequest) returns (SuccessResponse) {}
+  rpc RegisterWithMobileNumberAis (RegisterWithMobileNumberAisRequest) returns (SuccessResponse) {}
+  rpc Profile (EmptyRequest) returns (UserDetail) {}
+  rpc VerifyUser (VerifyUserRequest) returns (VerifyUserResponse);
+  rpc AutoRegisterBySocial (SocialRequest) returns (SocialResponse);
+  rpc UpdateSocialID(UpdateSocialIDRequest) returns (UpdateSocialIDRespose);
+  rpc ResetPassword(ResetPasswordRequest) returns (SuccessResponse);
+  rpc ResetPasswordToken(ResetPasswordTokenRequest) returns (ResetPasswordTokenResponse);
+  rpc UpdateResetPassword(UpdateResetPasswordRequest) returns (SuccessResponse);
+  rpc UpdateProfile(UpdateProfileRequest) returns (SuccessResponse);
+  rpc UploadProfilePicture(UploadProfilePictureRequest) returns (SuccessResponse);
+  rpc ResendVerifyByOldToken(VerifyUserRequest) returns (VerifyUserResponse);
+  rpc Resendverify(ResetPasswordRequest) returns (VerifyUserResponse);
+  rpc CheckTerm(EmptyRequest) returns (CheckTermResponse);
+  rpc AcceptTerm(EmptyRequest) returns (SuccessResponse);
+  rpc DeleteAccount(EmptyRequest) returns (SuccessResponse);
+  rpc TriggerDeleteTemp(EmptyRequest) returns (SuccessResponse);
+  rpc GetPdpa (EmptyRequest) returns (PDPAResponse);
+  rpc AcceptPrivacyPolicy(PrivacyPolicyRequest) returns (SuccessResponse);
+  rpc CheckEmailHasAddress(EmptyRequest) returns (CheckEmailHasAddressResponse);
+  rpc EventCalendarLimitExceed(EmptyRequest) returns (EventCalendarLimitExceedResponse);
+  rpc RequestOtp(RequestOtpRequest) returns (RequestOtpResponse);
+  rpc VerifyOtp(VerifyOtpRequest) returns (VerifyOtpResponse);
+  rpc RequestOtpOperationTool(RequestOtpRequest) returns (RequestOtpOperationToolResponse);
+  rpc DeleteUserTemp(DeleteUserTempRequest) returns (DeleteUserTempResponse);
+  rpc Getbytel(GetByTelRequest) returns (UserDetailResponse);
+  rpc VerifyPartnerID(VerifyPartnerIDRequest) returns (VerifyPartnerIDResponse);
+  rpc ResendVerifyEmailMember(ResetPasswordRequest) returns (SuccessResponse);
+  rpc UpdateContactProfile(UpdateProfileRequest) returns (SuccessResponse);
+  rpc CreateUserInterest (UserInterestRequest) returns (UserInterestRequestResponse);
+  rpc CreateUserInterestList (UsersInterestReqList) returns (UsersInterestResList);
+  rpc UpdateUserInterest (UserInterestUpdateRequest) returns (UserInterestRequestResponse);
+  rpc UpdateUserInterestList (UsersInterestUpdateReqList) returns (UsersInterestResList);
+  rpc GetInterestItems (EmptyRequest) returns (InterestItemList);
+  rpc TestPublishDeleteTel (UserDetail) returns (EmptyRequest);
+}
+
+message EmptyRequest {
+}
+
+message UpdateProfileRequest {
+  string email = 1 [json_name = "email"];
+  string name = 2 [json_name = "name"];
+  string lastname = 3 [json_name = "lastname"];
+  string  birthdate = 4 [json_name = "birthdate"];
+  string sex = 5 [json_name = "sex"];
+  string tel = 6 [json_name = "tel"];
+  repeated int32 favoriteArtists = 7 [json_name = "favorite_artists"];
+  string favoriteArtistsType = 8 [json_name = "favorite_artists_type"];
+  userAddressDetail userAddress = 9 [json_name = "user_address"];
+  string emailContact = 10 [json_name = "email_contact"];
+  int32 liveInThailand = 11 [json_name = "live_in_thailand"];
+  string partnerReferenceNumber = 12 [json_name = "partner_reference_number"];
+  string telContact = 13 [json_name = "tel_contact"];
+}
+
+message ResetPasswordTokenRequest {
+  string token = 1 [json_name = "token"];
+}
+
+message ResetPasswordTokenResponse {
+  string token = 1 [json_name = "token"];
+  google.protobuf.Timestamp expiredAt = 2 [json_name = "expired_at"];
+}
+
+message ResetPasswordRequest {
+  string email = 1 [json_name = "email"];
+  string tel = 2 [json_name = "tel"];
+}
+
+message UpdateResetPasswordRequest {
+  string token = 1 [json_name = "token"];
+  string password = 2 [json_name = "password"];
+}
+
+message RegisterRequest {
+  string email = 1 [json_name = "email"];
+  string password = 2 [json_name = "password"];
+  string captchaToken = 3 [json_name = "captcha_token"];
+  string redirectUrl = 4 [json_name = "redirect_url"];
+  string clientId = 5 [json_name = "client_id"];
+  string withTermsConsent = 6 [json_name = "with_terms_consent"];
+  string withPPConsent = 7 [json_name = "with_pp_consent"];
+  string emailContact = 8 [json_name = "email_contact"];
+  string birthdate = 9 [json_name = "birthdate"];
+  string sex = 10 [json_name = "sex"];
+  string telContact = 11 [json_name = "tel_contact"];
+}
+
+message RegisterWithMobileNumberRequest {
+  string tel = 1 [json_name = "tel"];
+  string password = 2 [json_name = "password"];
+  string captchaToken = 3 [json_name = "captcha_token"];
+  string redirectUrl = 4 [json_name = "redirect_url"];
+  string clientId = 5 [json_name = "client_id"];
+  string withTermsConsent = 6 [json_name = "with_terms_consent"];
+  string withPPConsent = 7 [json_name = "with_pp_consent"];
+  string emailContact = 8 [json_name = "email_contact"];
+  string birthdate = 9 [json_name = "birthdate"];
+  string sex = 10 [json_name = "sex"];
+  string telContact = 11 [json_name = "tel_contact"];
+}
+
+message RegisterWithMobileNumberAisRequest {
+  string username = 1 [json_name = "username"];
+  string password = 2 [json_name = "password"];
+  string captchaToken = 3 [json_name = "captcha_token"];
+  string redirectUrl = 4 [json_name = "redirect_url"];
+  string clientId = 5 [json_name = "client_id"];
+  string withTermsConsent = 6 [json_name = "with_terms_consent"];
+  string withPPConsent = 7 [json_name = "with_pp_consent"];
+  string emailContact = 8 [json_name = "email_contact"];
+  string birthdate = 9 [json_name = "birthdate"];
+  string sex = 10 [json_name = "sex"];
+  string telContact = 11 [json_name = "tel_contact"];
+}
+
+message SuccessResponse {
+  string message = 1 [json_name = "message"];
+  successResult result = 2 [json_name = "result"];
+}
+
+message successResult {
+  string id = 1 [json_name = "id"];
+}
+
+message VerifyUserRequest {
+  string token = 1 [json_name = "token"];
+}
+
+message VerifyUserResponse {
+  string message = 1 [json_name = "message"];
+}
+
+message UserEvent {
+  string event = 1 [json_name = "event"];
+  UserDetail userdetail = 2 [json_name = "userdetail"];
+}
+
+message MailEvent {
+  string sender = 1;
+  string from = 2;
+  string receiver = 3;
+  string to = 4;
+  string subject = 5;
+  string link = 6;
+  string body = 7;
+  string template = 8;
+  string emailcustomer = 9;
+}
+
+message S3Event {
+  string file = 1;
+  string action = 2;
+  string bucket = 3;
+}
+
+message PointTopicEvent {
+  string eventType = 1;
+  string userId = 2;
+  string refId = 3;
+  string createdAt = 4;
+  google.protobuf.StringValue data = 5;
+}
+
+message UserDetail {
+  string id = 1 [json_name = "id"];
+  string email = 2 [json_name = "email"];
+  string password = 3 [json_name = "password"];
+  string name = 4 [json_name = "name"];
+  string lastname = 5 [json_name = "lastname"];
+  string birthdate = 6 [json_name = "birthdate"];
+  string sex = 7 [json_name = "sex"];
+  string tel = 8 [json_name = "tel"];
+  google.protobuf.Timestamp created_at = 9 [json_name = "created_at"];
+  google.protobuf.Timestamp updated_at = 10 [json_name = "updated_at"];
+  string redirectUrl = 11 [json_name = "redirect_url"];
+  string clientID = 12 [json_name = "client_id"];
+  string userStatus = 13 [json_name = "user_status"];
+  string source = 14 [json_name = "source"];
+  string facebookID = 15 [json_name = "facebook_id"];
+  string googleID = 16 [json_name = "google_id"];
+  string lineID = 17 [json_name = "line_id"];
+  string appleID = 18 [json_name = "apple_id"];
+  string imageURL = 19 [json_name = "image_url"];
+  repeated favoriteArtistItem favoriteArtists = 20 [json_name = "favorite_artists"];
+  string favoriteArtistsType = 21 [json_name = "favorite_artists_type"];
+
+  userAddressDetail userAddress = 22 [json_name = "user_address"];
+  string emailContact = 23 [json_name = "email_contact"];
+  int32 liveInThailand = 24 [json_name = "live_in_thailand"];
+  string partnerReferenceNumber = 25 [json_name = "partner_reference_number"];
+  string telContact = 26 [json_name = "tel_contact"];
+  repeated UserInterestResponse userInterestResponse = 27[json_name = "users_interest_list"];
+  bool isNewUser = 28 [json_name = "is_new_user"];
+}
+
+message favoriteArtistItem {
+  google.protobuf.Int32Value daraID = 1 [json_name = "dara_id"];
+  google.protobuf.StringValue fullName = 2 [json_name = "full_name"];
+  google.protobuf.StringValue nickName = 3 [json_name = "nick_name"];
+  google.protobuf.StringValue gender = 4 [json_name = "gender"];
+  google.protobuf.StringValue imageSmall = 5 [json_name = "image_small"];
+  google.protobuf.StringValue imageMedium = 6 [json_name = "image_medium"];
+  google.protobuf.StringValue imageLarge = 7 [json_name = "image_large"];
+  google.protobuf.StringValue favoriteArtistsType = 8 [json_name = "favorite_artists_type"];
+}
+
+message userAddressDetail {
+  google.protobuf.StringValue addressNumber = 1 [json_name = "address_number"];
+  google.protobuf.StringValue villageName = 2 [json_name = "village_name"];
+  google.protobuf.StringValue villageNumber = 3 [json_name = "village_number"];
+  google.protobuf.StringValue lane = 4 [json_name = "lane"];
+  google.protobuf.StringValue road = 5 [json_name = "road"];
+  google.protobuf.Int32Value subDistrict = 6 [json_name = "sub_district"];
+  google.protobuf.Int32Value district = 7 [json_name = "district"];
+  google.protobuf.Int32Value province = 8 [json_name = "province"];
+  google.protobuf.StringValue postalCode = 9 [json_name = "postal_code"];
+  google.protobuf.StringValue occupation = 10 [json_name = "occupation"];
+  google.protobuf.Int32Value salary = 11 [json_name = "salary"];
+  google.protobuf.StringValue subDistrictName = 12 [json_name = "sub_district_name"];
+  google.protobuf.StringValue districtName = 13 [json_name = "district_name"];
+  google.protobuf.StringValue provinceName = 14 [json_name = "province_name"];
+}
+
+message SocialRequest {
+  string facebookID = 1 [json_name = "facebook_id"];
+  string googleID = 2 [json_name = "google_id"];
+  string lineID = 3 [json_name = "line_id"];
+  string appleID = 4 [json_name = "apple_id"];
+  string email = 5 [json_name = "email"];
+  string name = 6 [json_name = "name"];
+  string lastname = 7 [json_name = "lastname"];
+  string clientID = 8 [json_name = "client_id"];
+  string imageURL = 9 [json_name = "image_url"];
+  string source = 10 [json_name = "source"];
+  string sex = 11 [json_name = "sex"];
+  string tel = 12 [json_name = "tel"];
+  string birthdate = 13 [json_name = "birthdate"];
+  string withTermsConsent = 14 [json_name = "with_terms_consent"];
+  string withPPConsent = 15 [json_name = "with_pp_consent"];
+}
+
+message SocialResponse {
+  string message = 1 [json_name = "message"];
+  string id = 2 [json_name = "id"];
+  string facebookID = 3 [json_name = "facebook_id"];
+  string googleID = 4 [json_name = "google_id"];
+  string lineID = 5 [json_name = "line_id"];
+  string appleID = 6 [json_name = "apple_id"];
+  string email = 7 [json_name = "email"];
+  string name = 8 [json_name = "name"];
+  string lastname = 9 [json_name = "lastname"];
+  string clientID = 10 [json_name = "client_id"];
+  string imageURL = 11 [json_name = "image_url"];
+  string source = 12 [json_name = "source"];
+  string userStatus = 13  [json_name = "user_status"];
+  google.protobuf.Timestamp created_at = 14 [json_name = "created_at"];
+  google.protobuf.Timestamp updated_at = 15 [json_name = "updated_at"];
+}
+
+message UpdateSocialIDRequest {
+  string userID = 1 [json_name = "user_id"];
+  string facebookID = 2 [json_name = "facebook_id"];
+  string googleID = 3 [json_name = "google_id"];
+  string lineID = 4 [json_name = "line_id"];
+  string appleID = 5 [json_name = "apple_id"];
+}
+
+message UpdateSocialIDRespose {
+  string message = 1 [json_name = "message"];
+}
+
+message UploadProfilePictureRequest {
+  string imageData = 1 [json_name = "image_data"];
+}
+
+message AcceptTermRequest {
+  string userID = 1 [json_name = "user_id"];
+}
+
+message CheckTermResponse {
+  google.protobuf.BoolValue isLatest = 1 [json_name = "is_latest"];
+}
+
+message PDPAResponse {
+  google.protobuf.StringValue term_latest_version = 1 [json_name = "term_latest_version"];
+  google.protobuf.StringValue privacy_policy_latest_version = 2 [json_name = "privacy_policy_latest_version"];
+  google.protobuf.StringValue user_term_version = 3 [json_name = "user_term_version"];
+  google.protobuf.Timestamp user_term_accept_date = 4 [json_name = "user_term_accept_date"];
+  google.protobuf.StringValue user_privacy_policy_version = 5 [json_name = "user_privacy_policy_version"];
+  google.protobuf.BoolValue user_privacy_policy_accept = 6 [json_name = "user_privacy_policy_accept"];
+  google.protobuf.Timestamp user_privacy_policy_date = 7 [json_name = "user_privacy_policy_date"];
+  google.protobuf.StringValue term_details = 8 [json_name = "term_details"];
+  google.protobuf.StringValue privacy_policy_details = 9 [json_name = "privacy_policy_details"];
+  google.protobuf.Timestamp term_latest_update_date = 10 [json_name = "term_latest_update_date"];
+  google.protobuf.Timestamp privacy_policy_lastest_update_date = 11 [json_name = "privacy_policy_lastest_update_date"];
+}
+
+message PrivacyPolicyRequest {
+  google.protobuf.BoolValue accept = 1 [json_name = "accept"];
+  string userID = 2 [json_name = "user_id"];
+}
+
+message CheckEmailHasAddressResponse {
+  google.protobuf.StringValue message = 1 [json_name = "message"];
+  google.protobuf.BoolValue result = 2 [json_name = "result"];
+}
+
+message EventCalendarLimitExceedResponse {
+  google.protobuf.StringValue message = 1 [json_name = "message"];
+  EventCalendarLimitExceedResponseBody result = 2 [json_name = "result"];
+}
+
+message EventCalendarLimitExceedResponseBody {
+  google.protobuf.BoolValue exceed = 1 [json_name = "exceed"];
+  google.protobuf.Int32Value amount = 2 [json_name = "amount"];
+}
+
+message RequestOtpRequest {
+  string tel = 1 [json_name = "tel"];
+  string type = 2 [json_name = "type"];
+}
+
+message RequestOtpData {
+  google.protobuf.StringValue reference = 1 [json_name = "reference"];
+  google.protobuf.Int32Value requestedTimes = 2 [json_name = "requested_times"];
+  google.protobuf.StringValue createdAt = 3 [json_name = "created_at"];
+}
+
+message VerifyOtpData {
+  google.protobuf.BoolValue isValid = 1 [json_name = "is_valid"];
+}
+
+message RequestOtpResponse {
+  string message = 1 [json_name = "message"];
+  RequestOtpData data = 2 [json_name = "data"];
+}
+
+message VerifyOtpRequest {
+  string tel = 1 [json_name = "tel"];
+  string type = 2 [json_name = "type"];
+  string reference = 3 [json_name = "reference"];
+  string otp = 4 [json_name = "otp"];
+}
+
+message VerifyOtpResponse {
+  string message = 1 [json_name = "message"];
+  VerifyOtpData result = 2 [json_name = "result"];
+}
+
+message RequestOtpOperationToolResponse {
+  string message = 1 [json_name = "message"];
+  RequestOtpDataOperationTool data = 2 [json_name = "data"];
+}
+
+message RequestOtpDataOperationTool {
+  google.protobuf.StringValue reference = 1 [json_name = "reference"];
+  google.protobuf.StringValue otp = 2 [json_name = "otp"];
+  google.protobuf.StringValue createdAt = 3 [json_name = "created_at"];
+}
+
+message DeleteUserTempRequest {
+}
+
+message DeleteUserTempResponse {
+  string message = 1 [json_name = "message"];
+}
+
+message VerifyPartnerIDRequest {
+  string id = 1 [json_name = "id"];
+  string token = 2 [json_name = "token"];
+}
+
+message VerifyPartnerIDResponse {
+  string code = 1 [json_name = "code"];
+  string message = 2 [json_name = "message"];
+  string allowed = 3 [json_name = "allowed"];
+  UserSubscripted result = 4 [json_name = "result"];
+}
+
+message UserSubscripted {
+  string Reference = 1 [json_name = "ref"];
+  string Name = 2 [json_name = "first_name"];
+  string Lastname = 3 [json_name = "last_name"];
+  string Email = 4 [json_name = "email"];
+  string Tel = 5 [json_name = "mobile_no"];
+  string Source = 6 [json_name = "register_by"];
+  string ImageURL = 7 [json_name = "profile_image"];
+  string PartnerReferenceNumber = 8 [json_name = "partner_reference_number"];
+}
+
+message Error {
+  string code = 1;
+  string message = 2;
+}
+
+message GetByTelRequest {
+  string tel = 1 [json_name = "tel"];
+}
+
+message UserDetailResponse {
+  UserDetail data = 1 [json_name = "data"];
+  Error error = 2 [json_name = "error"];
+}
+
+
+message UsersInterestReqList {
+  repeated  UserInterestRequest usersInterestList = 1 [json_name = "usersInterestList"];
+}
+
+message UsersInterestUpdateReqList {
+  repeated  UserInterestUpdateRequest usersInterestUpdateReqList = 1 [json_name = "usersInterestUpdateReqList"];
+}
+
+message UsersInterestResList {
+  repeated  UserInterestResponse usersInterestResList = 1 [json_name = "usersInterestResList"];
+}
+
+
+message UserInterestRequest {
+  string typeUserInterest = 1 [json_name = "type_user_interest"];
+  string campaignId = 2 [json_name = "campaign_id"];
+  string userId = 3 [json_name = "user_id"];
+  repeated string interest_ids = 4;
+}
+
+message UserInterestUpdateRequest {
+  string id = 1 [json_name = "id"];
+  string typeUserInterest = 2 [json_name = "type_user_interest"];
+  string campaignId = 3 [json_name = "campaign_id"];
+  string userId = 4 [json_name = "user_id"];
+  repeated string interest_ids = 5;
+}
+
+message InterestList {
+  string ids = 1 [json_name = "ids"];
+}
+
+message UserInterestResponse {
+  string id = 1;
+  string typeUserInterest = 2 [json_name = "type_user_interest"];
+  string campaignId = 3 [json_name = "campaign_id"];
+  string userId = 4 [json_name = "user_id"];
+  google.protobuf.Timestamp created_at = 5 [json_name = "created_at"];
+  google.protobuf.Timestamp updated_at = 6 [json_name = "updated_at"];
+  repeated Item items = 7;
+}
+
+message InterestItem {
+  string id = 1;
+  string name = 2;
+  string nameEn = 3 [json_name = "name_en"];
+  string gaId = 4 [json_name = "ga_id"];
+}
+
+message InterestItemList {
+  repeated InterestItem items = 1;
+}
+
+message Item {
+  int32 id = 1;
+  string name = 2;
+  string name_en = 3;
+  string ga_id = 4;
+}
+
+message UserInterestRequestResponse {
+  UserInterestResponse data = 1 [json_name = "data"];
+  Error error = 2 [json_name = "error"];
+}

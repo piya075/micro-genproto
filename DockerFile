@@ -1,0 +1,6 @@
+FROM micro/micro:v2.9.3
+COPY . .
+RUN apk update && apk add --no-cache make protobuf-dev
+RUN go get github.com/micro/micro/v2/cmd/protoc-gen-micro@latest
+RUN go get google.golang.org/protobuf/cmd/protoc-gen-go@v1.26.0
+ENTRYPOINT ["tail", "-f", "/dev/null"]
